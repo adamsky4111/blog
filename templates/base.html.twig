@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Welcome to Symfony!</title>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
 </head>
 <body>
-<h1>{{ page_title }}</h1>
-
-<ul id="navigation">
-    {% for item in navigation %}
-        <li><a href="{{ item.href }}">{{ item.caption }}</a></li>
-    {% endfor %}
-</ul>
+{% block body %}{% endblock %}
+{% block javascripts %}{% endblock %}
 </body>
 </html>
