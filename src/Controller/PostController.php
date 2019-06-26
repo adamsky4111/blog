@@ -60,7 +60,7 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="post_edit", methods={"GET","POST"})
+     * @Route("/edit/{id}/", name="post_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Post $post): Response
     {

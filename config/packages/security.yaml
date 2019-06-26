@@ -25,5 +25,5 @@ security:
                 invalidate_session: true
 
     access_control:
-        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-
+        # require ROLE_USER for add comments*
+        - { path: ^/post/comment/new/, roles: ROLE_USER }
