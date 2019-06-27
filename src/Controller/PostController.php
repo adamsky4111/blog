@@ -8,8 +8,9 @@ use App\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\Config\Definition\Exception\Exception;
 /**
  * @Route("/post")
  */
@@ -35,6 +36,20 @@ class PostController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $post->getImg();
+            $fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
+
+            try {
+                $file->move(
+                    $this->getParameter('img_directory'),
+                    $fileName
+                );
+            } catch (FileException $e) {
+
+                // TODO: upload filed
+            }
+            $post->setImg($fileName);
+
             $entityManager = $this->getDoctrine()->getManager();
             $post->setCreationDate(new \DateTime("now"));
             $entityManager->persist($post);
@@ -94,5 +109,9 @@ class PostController extends AbstractController
         }
 
         return $this->redirectToRoute('post_index');
+    }
+    private function generateUniqueFileName()
+    {
+        return md5(uniqid());
     }
 }

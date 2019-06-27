@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -18,15 +20,24 @@ class Post
      */
     private $id;
     /**
+     * @Assert\NotBlank(message="Please enter the post title")
      * @ORM\Column(type="string", length=255)
      */
     private $title;
     /**
+     * @Assert\NotBlank(message="Please enter the description")
      * @ORM\Column(type="text")
      */
     private $description;
+
     /**
-     * @ORM\Column(type="date")
+     * @Assert\NotBlank(message="Please enter the post body")
+     * @ORM\Column(type="text", )
+     */
+    private $body;
+
+    /**
+     * @ORM\Column(type="date", )
      */
     private $creationDate;
     /**
@@ -38,6 +49,15 @@ class Post
      * @ORM\Column(type="date", nullable=true)
      */
     private $updatedDate;
+    /**
+     * @var UploadedFile
+     *
+     * @ORM\Column(type="string")
+     *
+     * @Assert\NotBlank(message="Please, upload the picture")
+     * @Assert\File(mimeTypes={ "image/png" })
+     */
+    private $img;
 
     public function getId(): ?int
     {
@@ -108,4 +128,33 @@ class Post
     {
         $this->comments->add($comment);
     }
+
+    public function getImg()
+    {
+        return $this->img;
+    }
+
+    public function setImg($img)
+    {
+        $this->img = $img;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBody()
+    {
+        return $this->body;
+    }
+
+    /**
+     * @param mixed $body
+     */
+    public function setBody($body): void
+    {
+        $this->body = $body;
+    }
+
 }

@@ -3,6 +3,8 @@
 {% block title %}Post{% endblock %}
 
 {% block body %}
+
+
     <h1>Post</h1>
 
     <table class="table">
@@ -22,6 +24,10 @@
         <tr>
             <th>CreationDate</th>
             <td>{{ post.creationDate ? post.creationDate|date('Y-m-d') : '' }}</td>
+        </tr>
+        <tr>
+            <th>image</th>
+            <td><a href="{{ asset('uploads/img/' ~ post.img) }}">View brochure (PDF)</a></td>
         </tr>
         </tbody>
     </table>

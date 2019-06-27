@@ -27,3 +27,4 @@ security:
     access_control:
         # require ROLE_USER for add comments*
         - { path: ^/post/comment/new/, roles: ROLE_USER }
+

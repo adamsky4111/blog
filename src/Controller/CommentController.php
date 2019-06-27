@@ -34,7 +34,8 @@ class CommentController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('post_show',[
-                'id' => $post->getId()           ]);
+                'id' => $post->getId()
+            ]);
         }
 
         return $this->render('comment/new.html.twig', [
