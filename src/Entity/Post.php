@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -29,13 +30,11 @@ class Post
      * @ORM\Column(type="text")
      */
     private $description;
-
     /**
      * @Assert\NotBlank(message="Please enter the post body")
      * @ORM\Column(type="text", )
      */
     private $body;
-
     /**
      * @ORM\Column(type="date", )
      */
@@ -58,6 +57,16 @@ class Post
      * @Assert\File(mimeTypes={ "image/png" })
      */
     private $img;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Tag", mappedBy="posts")
+     */
+    private $tags;
+
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -155,6 +164,34 @@ class Post
     public function setBody($body): void
     {
         $this->body = $body;
+    }
+
+    /**
+     * @return Collection|Tag[]
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    public function addTag(Tag $tag): self
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
+            $tag->addPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTag(Tag $tag): self
+    {
+        if ($this->tags->contains($tag)) {
+            $this->tags->removeElement($tag);
+            $tag->removePost($this);
+        }
+
+        return $this;
     }
 
 }

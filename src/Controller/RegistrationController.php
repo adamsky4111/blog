@@ -28,11 +28,9 @@ class RegistrationController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
-
         }
-
         return $this->render(
-            'authorization/register.html.twig',
+            'security/register.html.twig',
             ['form' => $form->createView()]
         );
     }

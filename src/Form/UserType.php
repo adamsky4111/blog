@@ -18,15 +18,15 @@ class UserType extends AbstractType
             ->add('username', TextType::class)
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
-                'first_options'  => array('label' => 'Password'),
-                'second_options' => array('label' => 'Repeat Password'), //TODO: Dodać email i potwierdzenie przez admina przy rejestracji
+                'first_options'  => ['label' => 'Password'],
+                'second_options' => ['label' => 'Repeat Password'], //TODO: Dodać email i potwierdzenie przez admina przy rejestracji
             ));
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => User::class,
-        ));
+        ]);
     }
 }

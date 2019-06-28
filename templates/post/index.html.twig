@@ -7,27 +7,7 @@
     <div class="container" style="margin-top:30px">
         <div class="row">
             <div class="col-sm-4">
-                <h2>About Me</h2>
-                <h5>Photo of me:</h5>
-                <div class="fakeimg">Fake Image</div>
-                <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
-                <h3>Some Links</h3>
-                <p>Lorem ipsum dolor sit ame.</p>
-                <ul class="nav nav-pills flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Active</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Disabled</a>
-                    </li>
-                </ul>
-                <hr class="d-sm-none">
+                {{ include('post/loremipsum.html.twig') }}
             </div>
             <div class="col-sm-8">
                 {% for post in posts %}
@@ -35,7 +15,7 @@
                     <h5>{{ post.creationDate ? post.creationDate|date('Y-m-d') : '' }}</h5>
                     <div class="fakeimg">Fake Image</div>
                     <p>{{ post.description }}</p>
-
+                    <a href="{{ path('post_show', {'id': post.id}) }}">read more...</a>
                 {% else %}
                     <tr>
                         <td colspan="5">no records found</td>
