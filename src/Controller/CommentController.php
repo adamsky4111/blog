@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Entity\Post;
@@ -26,18 +27,15 @@ class CommentController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-
             $comment->setPost($post);
             $comment->setCreationDate(new \DateTime("now"));
-
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            return $this->redirectToRoute('post_show',[
+            return $this->redirectToRoute('post_show', [
                 'id' => $post->getId()
             ]);
         }
-
         return $this->render('comment/new.html.twig', [
             'comment' => $comment,
             'form' => $form->createView(),

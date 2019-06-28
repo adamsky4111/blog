@@ -20,34 +20,41 @@ class Post
      * @ORM\Column(type="integer")
      */
     private $id;
+
     /**
      * @Assert\NotBlank(message="Please enter the post title")
      * @ORM\Column(type="string", length=255)
      */
     private $title;
+
     /**
      * @Assert\NotBlank(message="Please enter the description")
      * @ORM\Column(type="text")
      */
     private $description;
+
     /**
      * @Assert\NotBlank(message="Please enter the post body")
      * @ORM\Column(type="text", )
      */
     private $body;
+
     /**
      * @ORM\Column(type="date", )
      */
     private $creationDate;
+
     /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post")
      */
     public $comments;
+
     /**
      * @ORM\Column(type="date", nullable=true)
      */
     private $updatedDate;
+
     /**
      * @var UploadedFile
      *

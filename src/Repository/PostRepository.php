@@ -17,4 +17,12 @@ class PostRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Post::class);
     }
+    public function findAllOrderedByCreatedDate()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT p FROM App:Post p ORDER BY p.creationDate ASC'
+            )
+            ->getResult();
+    }
 }

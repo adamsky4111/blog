@@ -15,18 +15,22 @@ class Comment
      * @ORM\Column(type="integer")
      */
     private $id;
+
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Post", inversedBy="comments")
      */
     private $post;
+
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $author;
+
     /**
      * @ORM\Column(type="text")
      */
     private $description;
+
     /**
      * @ORM\Column(type="date")
      */

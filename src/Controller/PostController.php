@@ -22,7 +22,7 @@ class PostController extends AbstractController
     public function index(PostRepository $postRepository): Response
     {
         return $this->render('post/index.html.twig', [
-            'posts' => $postRepository->findAll(),
+            'posts' => $postRepository->findAllOrderedByCreatedDate(),
         ]);
     }
 
@@ -46,7 +46,7 @@ class PostController extends AbstractController
                 );
             } catch (FileException $e) {
 
-                // TODO: upload filed
+                // TODO: upload failed
             }
             $post->setImg($fileName);
 
@@ -110,6 +110,7 @@ class PostController extends AbstractController
 
         return $this->redirectToRoute('post_index');
     }
+
     private function generateUniqueFileName()
     {
         return md5(uniqid());
