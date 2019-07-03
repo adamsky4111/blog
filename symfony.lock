@@ -331,6 +331,9 @@
             "config/routes.yaml"
         ]
     },
+    "symfony/security": {
+        "version": "v4.3.1"
+    },
     "symfony/security-acl": {
         "version": "v3.0.2"
     },

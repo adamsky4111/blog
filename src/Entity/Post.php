@@ -66,7 +66,8 @@ class Post
     private $img;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Tag", mappedBy="posts")
+     * @var Collection
+     * @ORM\ManyToMany(targetEntity="App\Entity\Tag", inversedBy="posts", cascade={"persist"})
      */
     private $tags;
 

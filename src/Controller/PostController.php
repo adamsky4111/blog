@@ -3,14 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Entity\Tag;
 use App\Form\PostType;
 use App\Repository\PostRepository;
+use App\Repository\TagRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Config\Definition\Exception\Exception;
+
 /**
  * @Route("/post")
  */
@@ -29,15 +32,17 @@ class PostController extends AbstractController
     /**
      * @Route("/new", name="post_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, TagRepository $tagRepository): Response
     {
         $post = new Post();
+        $post->addTag(new Tag());
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //dd($post);
             $file = $post->getImg();
-            $fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
+            $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
 
             try {
                 $file->move(
@@ -52,6 +57,14 @@ class PostController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
             $post->setCreationDate(new \DateTime("now"));
+
+            foreach ($post->getTags() as $tag) {
+                if(($existingTag = $tagRepository->containsName($tag->getName()))) {
+                    $post->getTags()->removeElement($tag);
+                    $post->addTag($existingTag);
+                }
+            }
+
             $entityManager->persist($post);
             $entityManager->flush();
 
