@@ -3,6 +3,7 @@
 {% block title %}Post{% endblock %}
 
 {% block body %}
+
 <div class="container">
 
     <div class="row">
@@ -37,12 +38,7 @@
     <div class="card my-4">
         <h5 class="card-header">Leave a Comment:</h5>
         <div class="card-body">
-            <form>
-                <div class="form-group">
-                    <textarea class="form-control" rows="3"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+            {{ include('comment/new_comment.html.twig') }}
         </div>
     </div>
 
@@ -55,6 +51,15 @@
             {{ comment.description }}<br>
             {{ comment.creationDate ? comment.creationDate|date('Y-m-d') : '' }}
 
+            {% for selfComment in comment.children %}
+                <div class="media mt-4">
+                    <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                    <div class="media-body">
+                        {{ selfComment.description }}<br>
+                        {{ selfComment.creationDate ? selfComment.creationDate|date('Y-m-d') : '' }}
+                    </div>
+                </div>
+            {% endfor %}
             <a href="{{ path('comment_new_self', {'id': comment.id}, {'post': post.id}) }}">add comment</a>
         </div>
     </div>
