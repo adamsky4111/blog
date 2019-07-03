@@ -3,45 +3,66 @@
 {% block title %}Post{% endblock %}
 
 {% block body %}
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-lg-8">
 
 
-    <h1>Post</h1>
+            <h1 class="mt-4">{{ post.title }}</h1>
+            <hr>
+            <p>{{ post.creationDate ? post.creationDate|date('Y-m-d') : '' }}</p>
 
-    <table class="table">
-        <tbody>
-        <tr>
-            <th>Title</th>
-            <td>{{ post.title }}</td>
-        </tr>
-        <tr>
-            <td><img src='{{ asset("uploads/img/" ~ post.img)}}' class="img-rounded"/>
-        </tr>
-        <tr>
-            <td>{{ post.description }}</td>
-        </tr>
-        <tr>
-            <th>{{ post.body }}</th>
-        </tr>
-        {% if post.updatedDate is not null%}
-        <tr>
-            <th>last modify</th>
-            <th>{{ post.updatedDate ? post.updatedDate|date('Y-m-d') : '' }}</th>
-        </tr>
-        {% endif %}
-        <tr>
-            <th>created at</th>
-            <td>{{ post.creationDate ? post.creationDate|date('Y-m-d') : '' }}</td>
-        </tr>
+            <hr>
 
-        </tbody>
-    </table>
-    <br>
+            <!-- Preview Image -->
+            <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
+
+            <hr>
+
+            <!-- Post Content -->
+            <p class="lead">{{ post.description }}</p>
+            <p>{{ post.body }}</p>
+
+            <hr>
+
+    <h1>Comments</h1>
+
+
+        </div>
+    </div>
+
+
+    <div class="card my-4">
+        <h5 class="card-header">Leave a Comment:</h5>
+        <div class="card-body">
+            <form>
+                <div class="form-group">
+                    <textarea class="form-control" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+
+
     {% for comment in post.comments %}
-        {{ comment.author }}:
-        {{ comment.description }} <br>
-        {{ post.creationDate ? comment.creationDate|date('Y-m-d') : '' }} <br>
-
+    <div class="media mb-4">
+        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+        <div class="media-body">
+            <h5 class="mt-0">{{ comment.author }}</h5>
+            {{ comment.description }}<br>
+            {{ post.creationDate ? comment.creationDate|date('Y-m-d') : '' }}
+        </div>
+    </div>
     {% endfor %}
+</div>
+
+
+
+
+
 
     <a href="{{ path('post_index') }}">back to list</a>
 
