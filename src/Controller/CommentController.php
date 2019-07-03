@@ -42,5 +42,33 @@ class CommentController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/comment/new/{id}/new", name="comment_new_self", methods={"GET","POST"})
+     */
+    public function newSelfComment(Request $request, Comment $parentComment): Response
+    {
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $comment->setParent($parentComment);
+
+            $comment->setPost($parentComment->getPost());
+            $comment->setCreationDate(new \DateTime("now"));
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('post_show', [
+                'id' => $parentComment->getPost()->getId()
+            ]);
+        }
+        return $this->render('comment/_new.html.twig', [
+            'comment' => $comment,
+            'form' => $form->createView(),
+        ]);
+    }
+
 
 }

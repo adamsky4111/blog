@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -35,6 +37,18 @@ class Comment
      * @ORM\Column(type="date")
      */
     private $creationDate;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="parent")
+     */
+    private $children;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Comment", inversedBy="children")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
+     */
+    private $parent;
 
     public function getId(): ?int
     {
@@ -88,5 +102,41 @@ class Comment
     public function setPost($post): void
     {
         $this->post = $post;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getChildren(): ArrayCollection
+    {
+        return $this->children;
+    }
+
+    /**
+     * @param ArrayCollection $child
+     */
+    public function setChildren(ArrayCollection $child): void
+    {
+        $this->children = $child;
+    }
+
+    public function addChildren(Comment $child): void
+    {
+        $this->children->add($child);
+    }
+    /**
+     * @return mixed
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @param mixed $parent
+     */
+    public function setParent($parent): void
+    {
+        $this->parent = $parent;
     }
 }

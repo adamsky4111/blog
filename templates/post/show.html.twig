@@ -53,7 +53,9 @@
         <div class="media-body">
             <h5 class="mt-0">{{ comment.author }}</h5>
             {{ comment.description }}<br>
-            {{ post.creationDate ? comment.creationDate|date('Y-m-d') : '' }}
+            {{ comment.creationDate ? comment.creationDate|date('Y-m-d') : '' }}
+
+            <a href="{{ path('comment_new_self', {'id': comment.id}, {'post': post.id}) }}">add comment</a>
         </div>
     </div>
     {% endfor %}
