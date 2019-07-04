@@ -15,13 +15,17 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: true
+            anonymous: ~
+            json_login:
+                check_path:    login
+                username_path: security.credentials.login
+                password_path: security.credentials.password
             guard:
                 authenticators:
                     - App\Security\LoginFormAuthenticator
             logout:
                 path:   /logout
-                target: /post
+                target: /home
                 invalidate_session: true
 
     access_control:

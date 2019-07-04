@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Captcha\Bundle\CaptchaBundle\Form\Type\CaptchaType;
 
 class UserType extends AbstractType
 {
@@ -16,11 +17,12 @@ class UserType extends AbstractType
     {
         $builder
             ->add('username', TextType::class)
-            ->add('plainPassword', RepeatedType::class, array(
+            ->add('email', EmailType::class)
+            ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options'  => ['label' => 'Password'],
                 'second_options' => ['label' => 'Repeat Password'], //TODO: Dodać email i potwierdzenie przez admina przy rejestracji
-            ));
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
