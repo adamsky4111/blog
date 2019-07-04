@@ -13,7 +13,7 @@
                 {% for post in posts %}
                     <h2>{{ post.title }}</h2>
                     <h5>{{ post.creationDate ? post.creationDate|date('Y-m-d') : '' }}</h5>
-                    <div class="fakeimg">Fake Image</div>
+                    <img class="img-fluid rounded" src="{{ asset('uploads/img/' ~ post.img) }}" alt="">
                     <p>{{ post.description }}</p>
                     <a href="{{ path('post_show', {'id': post.id}) }}">read more...</a>
                 {% else %}

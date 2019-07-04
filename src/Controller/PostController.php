@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Post;
 use App\Entity\Tag;
+use App\Form\CommentType;
 use App\Form\PostType;
 use App\Repository\PostRepository;
 use App\Repository\TagRepository;
@@ -15,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
 /**
- * @Route("/post")
+ * @Route("/home")
  */
 class PostController extends AbstractController
 {
@@ -40,6 +42,7 @@ class PostController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             //dd($post);
             $file = $post->getImg();
             $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
@@ -59,7 +62,7 @@ class PostController extends AbstractController
             $post->setCreationDate(new \DateTime("now"));
 
             foreach ($post->getTags() as $tag) {
-                if(($existingTag = $tagRepository->containsName($tag->getName()))) {
+                if (($existingTag = $tagRepository->containsName($tag->getName()))) {
                     $post->getTags()->removeElement($tag);
                     $post->addTag($existingTag);
                 }
@@ -78,12 +81,21 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="post_show", methods={"GET"})
+     * @Route("/{id}", name="post_show", methods={"GET", "POST"})
      */
     public function show(Post $post): Response
     {
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        //$form->handleRequest($request);
+        //if ($form-> isSubmitted() && $form->isValid()) {
+        //    return $this->redirectToRoute('comment_new', [
+        //        'id' => $post->getId()
+        //    ]);
+        //}
         return $this->render('post/show.html.twig', [
             'post' => $post,
+            'form' => $form->createView(),
         ]);
     }
 

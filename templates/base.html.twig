@@ -6,18 +6,29 @@
     <script src="{{ asset('https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js') }}"></script>
     <script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js') }}"></script>
     <script src="{{ asset('https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('./post/addTagForm.js')}}"></script>
     <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
           integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <style>
-        .fakeimg {
-            height: 200px;
-
-            background: #aaa;
+    <script>
+        function myFunction() {
+            var newDiv = document.createElement("div");
+            newDiv.setAttribute('id', 'post[tags][1]');
+            newDiv.setAttribute('name', 'post[tags][0]');
+            newDiv.appendChild(document.createTextNode('The man who mistook his wife for a hat'));
+            var newInput = document.createElement('INPUT');
+            newInput.setAttribute("type", "text");
+            newInput.setAttribute('id', 'post_tags_0_name');
+            newInput.setAttribute('name', 'post[tags][0][name]');
+            newInput.setAttribute('maxlength', 255);
+            newDiv.appendChild(newInput);
+            document.getElementById('post_tags').appendChild(newDiv);
         }
-    </style>
+
+    </script>
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}{% endblock %}
+
 </head>
 
 <br><br>
