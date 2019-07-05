@@ -43,7 +43,6 @@ class PostController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            //dd($post);
             $file = $post->getImg();
             $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
 
@@ -60,12 +59,6 @@ class PostController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
             $post->setCreationDate(new \DateTime("now"));
-           // $tags=$tagRepository->findAll();
-
-           // dd($tags, $tags2);
-           // dd(array_search($tags2[0]->getName(), $tags));
-           // dd($tags, $tags2[0]->getName());
-
             //dd($post->getTags(), $tags);
             foreach ($post->getTags() as $tag) {
                 if (($existingTag = $tagRepository
@@ -74,7 +67,6 @@ class PostController extends AbstractController
                     $post->getTags()->removeElement($tag);
                     $post->addTag($existingTag);
                 }
-
             }
 
             $entityManager->persist($post);
