@@ -19,30 +19,30 @@ class TagRepository extends ServiceEntityRepository
     }
     public function containsNameGetOneOrNull($name)
     {
-        $queryBuilder = $this->createQueryBuilder('p')
-            ->andWhere('p.name LIKE :name')
+        $queryBuilder = $this->createQueryBuilder('t')
+            ->andWhere('t.name LIKE :name')
             ->setParameter('name',$name)
-            ->orderBy('p.name', 'ASC')
+            ->orderBy('t.name', 'ASC')
             ->getQuery();
 
         return $queryBuilder->getOneOrNullResult();
     }
     public function findAll()
     {
-        $queryBuilder = $this->createQueryBuilder('p')
-            ->select('p.name')
-            ->orderBy('p.name', 'ASC')
+        $queryBuilder = $this->createQueryBuilder('t')
+            ->select('t.name')
+            ->orderBy('t.name', 'ASC')
             ->getQuery();
 
         return $queryBuilder->getResult();
     }
     public function findAllTagsIdByPostId($postId)
     {
-        $queryBuilder = $this->createQueryBuilder('p')
-            ->andWhere('p.post_id = :name')
+        $queryBuilder = $this->createQueryBuilder('t')
+            ->andWhere('t.post_id = :name')
             ->setParameter('postId', $postId)
-            ->select('p.tag_id')
-            ->orderBy('p.tag_id', 'ASC')
+            ->select('t.tag_id')
+            ->orderBy('t.tag_id', 'ASC')
             ->getQuery();
 
         return $queryBuilder->getArrayResult();

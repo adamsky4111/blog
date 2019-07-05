@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Comment;
 use App\Entity\Post;
 use App\Entity\Tag;
@@ -34,15 +35,15 @@ class PostController extends AbstractController
     /**
      * @Route("/new", name="post_new", methods={"GET","POST"})
      */
-    public function new(Request $request, TagRepository $tagRepository): Response
+    public function new(Request $request,
+                        TagRepository $tagRepository): Response
     {
         $post = new Post();
-        $post->addTag(new Tag());
-        $form = $this->createForm(PostType::class, $post);
+        $form = $this->createForm(
+            PostType::class, $post);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-
+            dd($post);
             $file = $post->getImg();
             $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
 
@@ -68,7 +69,6 @@ class PostController extends AbstractController
                     $post->addTag($existingTag);
                 }
             }
-
             $entityManager->persist($post);
             $entityManager->flush();
 
