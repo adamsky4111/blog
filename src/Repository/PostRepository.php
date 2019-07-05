@@ -35,4 +35,15 @@ class PostRepository extends ServiceEntityRepository
 
         return $queryBuilder->getResult();
     }
+    public function findAllPostsIdByTagId($tagId)
+    {
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->andWhere('p.tag_id = :id')
+            ->setParameter('id', $tagId)
+            ->select('p.post_id')
+            ->orderBy('p.post_id', 'ASC')
+            ->getQuery();
+
+        return $queryBuilder->getArrayResult();
+    }
 }
