@@ -71,6 +71,12 @@ class Post
      */
     private $tags;
 
+    /**
+     * @var Collection
+     * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="posts", cascade={"persist"})
+     */
+    private $categories;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -197,6 +203,34 @@ class Post
         if ($this->tags->contains($tag)) {
             $this->tags->removeElement($tag);
             $tag->removePost($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tag[]
+     */
+    public function getCategory(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+            $category->addPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        if ($this->categories->contains($category)) {
+            $this->categories->removeElement($category);
+            $category->removePost($this);
         }
 
         return $this;
