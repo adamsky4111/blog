@@ -30,11 +30,21 @@ class TagRepository extends ServiceEntityRepository
     public function findAll()
     {
         $queryBuilder = $this->createQueryBuilder('p')
-            //->select('p.name')
+            ->select('p.name')
             ->orderBy('p.name', 'ASC')
             ->getQuery();
 
         return $queryBuilder->getResult();
     }
+    public function findAllPostsIdByTags($postId)
+    {
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->andWhere('p.post_id = :name')
+            ->setParameter('postId', $postId)
+            ->select('p.tag_id')
+            ->orderBy('p.tag_id', 'ASC')
+            ->getQuery();
 
+        return $queryBuilder->getArrayResult();
+    }
 }
