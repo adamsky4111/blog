@@ -60,7 +60,7 @@ class PostController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
             $post->setCreationDate(new \DateTime("now"));
-            $tags=$tagRepository->findAll();
+           // $tags=$tagRepository->findAll();
 
            // dd($tags, $tags2);
            // dd(array_search($tags2[0]->getName(), $tags));
