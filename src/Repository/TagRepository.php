@@ -9,7 +9,6 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 /**
  * @method Tag|null find($id, $lockMode = null, $lockVersion = null)
  * @method Tag|null findOneBy(array $criteria, array $orderBy = null)
- * @method Tag[]    findAll()
  * @method Tag[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class TagRepository extends ServiceEntityRepository
@@ -18,7 +17,7 @@ class TagRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Tag::class);
     }
-    public function containsName($name)
+    public function containsNameGetOneOrNull($name)
     {
         $queryBuilder = $this->createQueryBuilder('p')
             ->andWhere('p.name LIKE :name')
@@ -28,4 +27,14 @@ class TagRepository extends ServiceEntityRepository
 
         return $queryBuilder->getOneOrNullResult();
     }
+    public function findAll()
+    {
+        $queryBuilder = $this->createQueryBuilder('p')
+            //->select('p.name')
+            ->orderBy('p.name', 'ASC')
+            ->getQuery();
+
+        return $queryBuilder->getResult();
+    }
+
 }

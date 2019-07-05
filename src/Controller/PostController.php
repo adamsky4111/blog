@@ -60,12 +60,21 @@ class PostController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
             $post->setCreationDate(new \DateTime("now"));
+            $tags=$tagRepository->findAll();
 
+           // dd($tags, $tags2);
+           // dd(array_search($tags2[0]->getName(), $tags));
+           // dd($tags, $tags2[0]->getName());
+
+            //dd($post->getTags(), $tags);
             foreach ($post->getTags() as $tag) {
-                if (($existingTag = $tagRepository->containsName($tag->getName()))) {
+                if (($existingTag = $tagRepository
+                    ->containsNameGetOneOrNull($tag->getName()))) {
+
                     $post->getTags()->removeElement($tag);
                     $post->addTag($existingTag);
                 }
+
             }
 
             $entityManager->persist($post);

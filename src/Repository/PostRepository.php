@@ -25,4 +25,14 @@ class PostRepository extends ServiceEntityRepository
             )
             ->getResult();
     }
+    public function searchByTitle($title)
+    {
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->andWhere('p.title LIKE :title')
+            ->setParameter('title',$title)
+            ->orderBy('p.creationDate', 'ASC')
+            ->getQuery();
+
+        return $queryBuilder->getResult();
+    }
 }
