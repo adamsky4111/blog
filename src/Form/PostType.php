@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Form;
 
 use App\Entity\Category;
@@ -22,6 +23,7 @@ class PostType extends AbstractType
     {
 
     }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -29,26 +31,26 @@ class PostType extends AbstractType
             ->add('description')
             ->add('body')
             ->add('img', FileType::class, [
-                'label'  => 'Img (PNG file)',
-                ])
+                'label' => 'Img (PNG file)',
+            ])
             ->add('tags', CollectionType::class, [
-                'entry_type'    => TagType::class,
-                'entry_options' => ['label' => false],
-                'allow_add'     => true,
-                'allow_delete'  => true,
-                'by_reference'  => false,
+                'entry_type'   => TagType::class,
+                'entry_options'=> ['label' => false],
+                'allow_add'    => true,
+                'allow_delete' => true,
+                'by_reference' => false,
             ])
             ->add('categories', EntityType::class, [
-                    'class' => Category::class,
-                    'query_builder' =>function(CategoryRepository $categoryRepository) {
-                        return $categoryRepository->createQueryBuilder('c')
-                            ->orderBy('c.name', 'ASC');
-                    },
-                    'expanded' => false,
-                    'multiple' => true,
-                    'choice_label' => 'name',
-                    ])
-        ;
+                'class' => Category::class,
+                'query_builder' => function (CategoryRepository $categoryRepository) {
+                    return $categoryRepository
+                        ->createQueryBuilder('c')
+                        ->orderBy('c.name', 'ASC');
+                },
+                'expanded'     => false,
+                'multiple'     => true,
+                'choice_label' => 'name',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

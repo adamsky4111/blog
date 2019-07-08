@@ -21,7 +21,7 @@ class UserType extends AbstractType
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options'  => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat Password'], //TODO: Dodać email i potwierdzenie przez admina przy rejestracji
+                'second_options' => ['label' => 'Repeat Password'],
             ]);
     }
 
