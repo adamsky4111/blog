@@ -13,6 +13,7 @@ use App\Repository\TagRepository;
 use App\Service\DuplicateService;
 use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -52,10 +53,10 @@ class PostController extends AbstractController
             $post = $fileUploader->
                 UploadFile($post,
                 $this->getParameter('img_directory'));
-            $duplicateService->checkExistingTags($tagRepository, $post);
 
+            $duplicateService->checkExistingTags($tagRepository, $post);
             $entityManager = $this->getDoctrine()->getManager();
-            $post->setCreationDate(new \DateTime("now"));
+            $post->setPublishedAt(new \DateTime("now"));
             $entityManager->persist($post);
             $entityManager->flush();
 
@@ -85,12 +86,21 @@ class PostController extends AbstractController
      * @Route("/edit/{id}/", name="post_edit", methods={"GET","POST"})
      */
     public function edit(Request $request,
-                         Post $post): Response
+                         Post $post,
+                         TagRepository $tagRepository,
+                         DuplicateService $duplicateService,
+                         FileUploader $fileUploader): Response
     {
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $post = $fileUploader->
+            UploadFile($post,
+                $this->getParameter('img_directory'));
+
+            $duplicateService->checkExistingTags($tagRepository, $post);
+
             $post->setUpdatedDate(new \DateTime("now"));
             $this->getDoctrine()->getManager()->flush();
 

@@ -9,6 +9,8 @@ use Sonata\Form\Type\CollectionType;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\VarDumper\Cloner\Data;
+use \DateTime;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
@@ -41,9 +43,9 @@ class Post
     private $body;
 
     /**
-     * @ORM\Column(type="date", )
+     * @ORM\Column(type="date")
      */
-    private $creationDate;
+    private $publishedAt;
 
     /**
      * @var ArrayCollection
@@ -111,14 +113,14 @@ class Post
         return $this;
     }
 
-    public function getCreationDate(): ?\DateTimeInterface
+    public function getPublishedAt(): ?\DateTimeInterface
     {
-        return $this->creationDate;
+        return $this->publishedAt;
     }
 
-    public function setCreationDate(\DateTimeInterface $updatedDate): self
+    public function setPublishedAt(\DateTimeInterface $publishedAt): self
     {
-        $this->creationDate = $updatedDate;
+        $this->publishedAt = $publishedAt;
         return $this;
     }
 

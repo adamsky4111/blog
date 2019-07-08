@@ -32,6 +32,7 @@ class PostType extends AbstractType
             ->add('body')
             ->add('img', FileType::class, [
                 'label' => 'Img (PNG file)',
+                'data_class' => null
             ])
             ->add('tags', CollectionType::class, [
                 'entry_type'   => TagType::class,

@@ -12,7 +12,7 @@
 
             <h1 class="mt-4">{{ post.title }}</h1>
             <hr>
-            <p>{{ post.creationDate ? post.creationDate|date('Y-m-d') : '' }}</p>
+            <p>{{ post.publishedAt ? post.publishedAt|date('Y-m-d') : '' }}</p>
             <hr>
             <!-- Preview Image -->
             <img class="img-fluid rounded" src="{{ asset('uploads/img/' ~ post.img) }}" alt="">
