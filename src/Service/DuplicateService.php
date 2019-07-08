@@ -3,11 +3,7 @@
 namespace App\Service;
 
 use App\Repository\TagRepository;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\Post;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
-
 
 class DuplicateService
 {
