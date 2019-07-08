@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Tag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -30,11 +31,11 @@ class TagRepository extends ServiceEntityRepository
     public function findAll()
     {
         $queryBuilder = $this->createQueryBuilder('t')
-            ->select('t.name')
+            //->select('t.name')
             ->orderBy('t.name', 'ASC')
             ->getQuery();
 
-        return $queryBuilder->getResult();
+        return new ArrayCollection($queryBuilder->getResult());
     }
     public function findAllTagsIdByPostId($postId)
     {

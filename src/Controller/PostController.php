@@ -10,6 +10,7 @@ use App\Form\CommentType;
 use App\Form\PostType;
 use App\Repository\PostRepository;
 use App\Repository\TagRepository;
+use App\Service\DuplicateService;
 use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,9 +39,11 @@ class PostController extends AbstractController
      */
     public function new(Request $request,
                         TagRepository $tagRepository,
-                        FileUploader $fileUploader): Response
+                        FileUploader $fileUploader,
+                        DuplicateService $duplicateService): Response
     {
         $post = new Post();
+        $post->addTag(new Tag());
         $form = $this->createForm(
             PostType::class, $post);
         $form->handleRequest($request);
@@ -49,18 +52,10 @@ class PostController extends AbstractController
             $post = $fileUploader->
                 UploadFile($post,
                 $this->getParameter('img_directory'));
+            $duplicateService->checkExistingTags($tagRepository, $post);
 
             $entityManager = $this->getDoctrine()->getManager();
             $post->setCreationDate(new \DateTime("now"));
-            //dd($post->getTags(), $tags);
-            foreach ($post->getTags() as $tag) {
-                if (($existingTag = $tagRepository
-                    ->containsNameGetOneOrNull($tag->getName()))) {
-
-                    $post->getTags()->removeElement($tag);
-                    $post->addTag($existingTag);
-                }
-            }
             $entityManager->persist($post);
             $entityManager->flush();
 
