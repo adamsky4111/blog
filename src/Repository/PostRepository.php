@@ -21,7 +21,7 @@ class PostRepository extends ServiceEntityRepository
     {
         return $this->getEntityManager()
             ->createQuery(
-                'SELECT p FROM App:Post p ORDER BY p.creationDate ASC'
+                'SELECT p FROM App:Post p ORDER BY p.publishedAt ASC'
             )
             ->getResult();
     }
@@ -30,7 +30,7 @@ class PostRepository extends ServiceEntityRepository
         $queryBuilder = $this->createQueryBuilder('p')
             ->andWhere('p.title LIKE :title')
             ->setParameter('title',$title)
-            ->orderBy('p.creationDate', 'ASC')
+            ->orderBy('p.publishedAt', 'ASC')
             ->getQuery();
 
         return $queryBuilder->getResult();

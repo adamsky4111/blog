@@ -2,15 +2,23 @@
 
 namespace App\Service;
 
+use App\Entity\Category;
+use App\Repository\CategoryRepository;
 use App\Repository\TagRepository;
 use App\Entity\Post;
 
 class DuplicateService
 {
-    public function checkExistingTags(TagRepository $tagRepository,
-                                      Post $post) : Post
+    private $tagRepository;
+
+    public function __construct(TagRepository $tagRepository)
     {
-            $tags = $tagRepository->findAll();
+        $this->tagRepository = $tagRepository;
+    }
+
+    public function checkExistingTags(Post $post) : Post
+    {
+            $tags = $this->tagRepository->findAll();
 
             foreach ($post->getTags() as $tag)
             {
@@ -18,7 +26,6 @@ class DuplicateService
                     if($tag->getName() == $existingTag->getName())
                         $post->getTags()->removeElement($tag);
                         $post->addTag($existingTag);
-
             }
 
             return $post;

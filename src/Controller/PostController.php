@@ -11,7 +11,8 @@ use App\Form\PostType;
 use App\Repository\PostRepository;
 use App\Repository\TagRepository;
 use App\Service\DuplicateService;
-use App\Service\FileUploader;
+use App\Service\FileUploaderService;
+use App\Service\PostService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,9 +40,7 @@ class PostController extends AbstractController
      * @Route("/new", name="post_new", methods={"GET","POST"})
      */
     public function new(Request $request,
-                        TagRepository $tagRepository,
-                        FileUploader $fileUploader,
-                        DuplicateService $duplicateService): Response
+                        PostService $postService): Response
     {
         $post = new Post();
         $post->addTag(new Tag());
@@ -50,15 +49,8 @@ class PostController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $post = $fileUploader->
-                UploadFile($post,
+            $postService->addPost($post,
                 $this->getParameter('img_directory'));
-
-            $duplicateService->checkExistingTags($tagRepository, $post);
-            $entityManager = $this->getDoctrine()->getManager();
-            $post->setPublishedAt(new \DateTime("now"));
-            $entityManager->persist($post);
-            $entityManager->flush();
 
             return $this->redirectToRoute('post_index');
         }
@@ -87,22 +79,15 @@ class PostController extends AbstractController
      */
     public function edit(Request $request,
                          Post $post,
-                         TagRepository $tagRepository,
-                         DuplicateService $duplicateService,
-                         FileUploader $fileUploader): Response
+                         PostService $postService): Response
     {
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $post = $fileUploader->
-            UploadFile($post,
+
+            $postService->editPost($post,
                 $this->getParameter('img_directory'));
-
-            $duplicateService->checkExistingTags($tagRepository, $post);
-
-            $post->setUpdatedDate(new \DateTime("now"));
-            $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('post_index', [
                 'id' => $post->getId(),

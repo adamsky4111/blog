@@ -23,11 +23,6 @@ class User implements UserInterface
     private $username;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     */
-    private $email;
-
-    /**
      * @ORM\Column(type="json")
      */
     private $roles = [];

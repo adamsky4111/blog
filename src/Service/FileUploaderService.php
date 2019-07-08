@@ -5,7 +5,7 @@ namespace App\Service;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use App\Entity\Post;
 
-class FileUploader
+class FileUploaderService
 {
     public function UploadFile(Post $post, $imgDirectory) : Post
     {
