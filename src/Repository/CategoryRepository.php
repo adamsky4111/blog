@@ -4,26 +4,10 @@ namespace App\Repository;
 
 use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-/**
- * @method Category|null find($id, $lockMode = null, $lockVersion = null)
- * @method Category|null findOneBy(array $criteria, array $orderBy = null)
- * @method Category[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
-class CategoryRepository extends ServiceEntityRepository
+class CategoryRepository
 {
-    public function __construct(RegistryInterface $registry)
-    {
-        parent::__construct($registry, Category::class);
-    }
 
-    public function findAll()
-    {
-        $queryBuilder = $this->createQueryBuilder('c')
-            ->orderBy('c.name', 'ASC')
-            ->getQuery();
-
-        return $queryBuilder->getResult();
-    }
 }
