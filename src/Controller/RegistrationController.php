@@ -16,14 +16,16 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="register_user")
      */
-    public function register(Request $request, RegisterService $registerService)
+    public function register(Request $request,
+                             UserPasswordEncoderInterface $passwordEncoder,
+                             RegisterService $registerService)
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $registerService->registerUser($user);
+            $registerService->registerUser($user, $passwordEncoder);
         }
         return $this->render(
             'security/register.html.twig',
