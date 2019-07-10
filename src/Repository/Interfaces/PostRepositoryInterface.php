@@ -9,6 +9,8 @@ interface PostRepositoryInterface
     //public function findById($id);
     public function save(Post $post): void;
 
+    public function delete(Post $post): void;
+
     public function find(int $id): Post;
 
     public function findAll();

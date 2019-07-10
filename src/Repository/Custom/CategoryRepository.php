@@ -6,9 +6,6 @@ use App\Entity\Category;
 use App\Repository\Interfaces\CategoryRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
-//use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-//use Symfony\Bridge\Doctrine\RegistryInterface;
-
 
 class CategoryRepository implements CategoryRepositoryInterface
 {

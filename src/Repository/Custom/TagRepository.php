@@ -26,27 +26,11 @@ class TagRepository implements TagRepositoryInterface
         return $this->repository->find($id);
     }
 
-
-
-    public function containsNameGetOneOrNull($name)
+    public function findAll(): ArrayCollection
     {
-        $queryBuilder = $this->createQueryBuilder('t')
-            ->andWhere('t.name LIKE :name')
-            ->setParameter('name',$name)
-            ->orderBy('t.name', 'ASC')
-            ->getQuery();
-
-        return $queryBuilder->getOneOrNullResult();
+        return new ArrayCollection($this->repository->findAll());
     }
-    public function findAll()
-    {
-        $queryBuilder = $this->entityManager->createQueryBuilder('t')
-            //->select('t.name')
-            ->orderBy('t.name', 'ASC')
-            ->getQuery();
 
-        return new ArrayCollection($queryBuilder->getResult());
-    }
     public function findAllTagsIdByPostId($postId)
     {
         $queryBuilder = $this->createQueryBuilder('t')

@@ -18,7 +18,8 @@ class UserService
         $this->userRepository = $userRepository;
     }
 
-    public function registerUser(User $user, UserPasswordEncoderInterface $userPasswordEncoder)
+    public function registerUser(User $user,
+                                 UserPasswordEncoderInterface $userPasswordEncoder)
     {
         $password = $userPasswordEncoder->encodePassword($user, $user->getPlainPassword());
         $user->setPassword($password);
