@@ -8,6 +8,7 @@ use App\Entity\Post;
 use App\Entity\Tag;
 use App\Form\CommentType;
 use App\Form\PostType;
+use App\Repository\Interfaces\PostRepositoryInterface;
 use App\Repository\PostRepository;
 use App\Repository\TagRepository;
 use App\Service\DuplicateService;
@@ -29,10 +30,10 @@ class PostController extends AbstractController
     /**
      * @Route("/", name="post_index", methods={"GET"})
      */
-    public function index(PostRepository $postRepository): Response
+    public function index(PostService $postService): Response
     {
         return $this->render('post/index.html.twig', [
-            'posts' => $postRepository->findAllOrderedByCreatedDate(),
+            'posts' => $postService->getAllPosts(),
         ]);
     }
 
@@ -49,7 +50,7 @@ class PostController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $postService->addPost($post,
+            $postService->addOrUpdatePost($post,
                 $this->getParameter('img_directory'));
 
             return $this->redirectToRoute('post_index');
@@ -86,7 +87,7 @@ class PostController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $postService->editPost($post,
+            $postService->addOrUpdatePost($post,
                 $this->getParameter('img_directory'));
 
             return $this->redirectToRoute('post_index', [
@@ -104,12 +105,10 @@ class PostController extends AbstractController
      * @Route("/{id}", name="post_delete", methods={"DELETE"})
      */
     public function delete(Request $request,
-                           Post $post): Response
+                           Post $post, PostService $postService): Response
     {
         if ($this->isCsrfTokenValid('delete' . $post->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($post);
-            $entityManager->flush();
+            $postService->deletePost($post);
         }
 
         return $this->redirectToRoute('post_index');

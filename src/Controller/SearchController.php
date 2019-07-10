@@ -6,7 +6,7 @@ use App\Entity\Tag;
 use App\Form\SearchType;
 use App\Form\TagType;
 use App\Repository\PostRepository;
-use App\Repository\TagRepository;
+use App\Repository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

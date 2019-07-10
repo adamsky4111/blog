@@ -3,44 +3,46 @@
 namespace App\Service;
 
 use App\Entity\Post;
-use App\Repository\PostRepository;
-use App\Repository\TagRepository;
-use App\Service\FileUploaderService;
-use Doctrine\ORM\EntityManagerInterface;
-use PhpParser\Node\Scalar\MagicConst\File;
+use App\Repository\Interfaces\PostRepositoryInterface;
+use Doctrine\ORM\EntityNotFoundException;
 
 class PostService
 {
     private $duplicateService;
     private $fileUploaderService;
-    private $entityManager;
-    private $tagRepository;
+    private $postRepository;
+
 
     public function  __construct(DuplicateService $duplicateService,
                                  FileUploaderService $fileUploaderService,
-                                 EntityManagerInterface $entityManager,
-                                 TagRepository $tagRepository)
+                                 PostRepositoryInterface $postRepository)
     {
+        $this->postRepository = $postRepository;
         $this->duplicateService = $duplicateService;
         $this->fileUploaderService = $fileUploaderService;
-        $this->entityManager = $entityManager;
-        $this->tagRepository = $tagRepository;
     }
-    public function addPost(Post $post,
-                            $imgDirectory)
+
+    public function addOrUpdatePost(Post $post,
+                                    $imgDirectory)
     {
         $post = $this->fileUploaderService->UploadFile($post, $imgDirectory);
         $this->duplicateService->checkExistingTags($post);
         $post->setPublishedAt(new \DateTime("now"));
-        $this->entityManager->persist($post);
-        $this->entityManager->flush();
+        $this->postRepository->save($post);
     }
-    public function  editPost(Post $post,
-                              $imgDirectory)
+
+    public function deletePost(Post $post)
     {
-        $post = $this->fileUploaderService->UploadFile($post, $imgDirectory);
-        $this->duplicateService->checkExistingTags($post);
-        $post->setUpdatedDate(new \DateTime("now"));
-        $this->entityManager->flush();
+        $this->postRepository->delete($post);
+    }
+
+    public function getAllPosts()
+    {
+        return $this->postRepository->findAllByPublishedDate();
+    }
+
+    public function getPost($id)
+    {
+        return $this->postRepository->find($id);
     }
 }

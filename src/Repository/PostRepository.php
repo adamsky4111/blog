@@ -17,33 +17,4 @@ class PostRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Post::class);
     }
-    public function findAllOrderedByCreatedDate()
-    {
-        return $this->getEntityManager()
-            ->createQuery(
-                'SELECT p FROM App:Post p ORDER BY p.publishedAt ASC'
-            )
-            ->getResult();
-    }
-    public function searchByTitle($title)
-    {
-        $queryBuilder = $this->createQueryBuilder('p')
-            ->andWhere('p.title LIKE :title')
-            ->setParameter('title',$title)
-            ->orderBy('p.publishedAt', 'ASC')
-            ->getQuery();
-
-        return $queryBuilder->getResult();
-    }
-    public function findAllPostsIdByTagId($tagId)
-    {
-        $queryBuilder = $this->createQueryBuilder('p')
-            ->andWhere('p.tag_id = :id')
-            ->setParameter('id', $tagId)
-            ->select('p.post_id')
-            ->orderBy('p.post_id', 'ASC')
-            ->getQuery();
-
-        return $queryBuilder->getArrayResult();
-    }
 }
