@@ -2,13 +2,13 @@
 
 namespace App\Repository\Custom;
 
-use App\Entity\Comment;
-use App\Repository\Interfaces\CommentRepositoryInterface;
+use App\Entity\Contact;
+use App\Repository\Interfaces\ContactRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class CommentRepository implements CommentRepositoryInterface
+class ContactRepository implements ContactRepositoryInterface
 {
     private $entityManager;
 
@@ -17,12 +17,13 @@ class CommentRepository implements CommentRepositoryInterface
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->repository = $this->entityManager->getRepository(Comment::class);
+        $this->repository = $this->entityManager->getRepository(Contact::class);
     }
 
-    public function find(int $id): Comment
+    public function save(Contact $contact): void
     {
-        return $this->repository->find($id);
+        $this->entityManager->persist($contact);
+        $this->entityManager->flush();
     }
 
     public function findAll()
@@ -30,9 +31,9 @@ class CommentRepository implements CommentRepositoryInterface
         return $this->repository->findAll();
     }
 
-    public function save(Comment $comment): void
+    public function find(int $id): Contact
     {
-        $this->entityManager->persist($comment);
-        $this->entityManager->flush();
+        return $this->repository->find($id);
     }
+
 }
