@@ -3,6 +3,7 @@
 
 namespace App\Service;
 
+use App\Repository\Interfaces\CommentRepositoryInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Comment;
@@ -10,11 +11,11 @@ use App\Entity\Post;
 
 class CommentService
 {
-    private $entityManager;
+    private $commentRepository;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(CommentRepositoryInterface $commentRepository)
     {
-        $this->entityManager = $entityManager;
+        $this->commentRepository = $commentRepository;
     }
     public function AddCommentToPost(Comment $comment,
                                      Post $post,
@@ -23,8 +24,7 @@ class CommentService
         $comment->setAuthor($username);
         $comment->setPost($post);
         $comment->setCreationDate(new \DateTime("now"));
-        $this->entityManager->persist($comment);
-        $this->entityManager->flush();
+        $this->commentRepository->save($comment);
 
     }
 
@@ -35,8 +35,7 @@ class CommentService
         $comment->setParent($parentComment);
         $comment->setAuthor($username);
         $comment->setCreationDate(new \DateTime("now"));
-        $this->entityManager->persist($comment);
-        $this->entityManager->flush();
+        $this->commentRepository->save($comment);
 
     }
 }
