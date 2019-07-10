@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Category;
 use App\Repository\CategoryRepository;
+use App\Repository\Interfaces\TagRepositoryInterface;
 use App\Repository\TagRepository;
 use App\Entity\Post;
 

@@ -5,20 +5,20 @@ namespace App\Service;
 
 
 use App\Entity\Contact;
+use App\Repository\Interfaces\ContactRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ContactService
 {
-    private $entityManager;
+    private $contactRepository;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(ContactRepositoryInterface $contactRepository)
     {
-        $this->entityManager = $entityManager;
+        $this->contactRepository = $contactRepository;
     }
 
     public function addMessege(Contact $contact)
     {
-        $this->entityManager->persist($contact);
-        $this->entityManager->flush();
+        $this->contactRepository->save($contact);
     }
 }
