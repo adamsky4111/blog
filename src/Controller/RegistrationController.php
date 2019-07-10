@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\UserType;
 use App\Entity\User;
 use App\Service\RegisterService;
+use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,14 +19,14 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request,
                              UserPasswordEncoderInterface $passwordEncoder,
-                             RegisterService $registerService)
+                             UserService $userService)
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $registerService->registerUser($user, $passwordEncoder);
+            $userService->registerUser($user, $passwordEncoder);
         }
         return $this->render(
             'security/register.html.twig',
