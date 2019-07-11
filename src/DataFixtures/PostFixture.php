@@ -18,7 +18,7 @@ class PostFixture extends Fixture
         $generator = \Faker\Factory::create('pl_PL');
 
         $populator = new Populator($generator, $manager);
-        $populator->addEntity(Post::class, 5000, [
+        $populator->addEntity(Post::class, 150000, [
             'title' => $generator->text(50) ,
             'description' => $generator->text(100),
             'body' => $generator->text(2000),

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d54b85506d34eba55db12ed12ada57a9",
+    "content-hash": "87f9a412448ec006c5bf48b50e8cdb1d",
     "packages": [
         {
             "name": "captcha-com/captcha",
@@ -2949,16 +2949,16 @@
         },
         {
             "name": "symfony/config",
-            "version": "v4.3.1",
+            "version": "v4.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "6379ee07398643e09e6ed1e87d9c62dfcad7f4eb"
+                "reference": "9198eea354be75794a7b1064de00d9ae9ae5090f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/6379ee07398643e09e6ed1e87d9c62dfcad7f4eb",
-                "reference": "6379ee07398643e09e6ed1e87d9c62dfcad7f4eb",
+                "url": "https://api.github.com/repos/symfony/config/zipball/9198eea354be75794a7b1064de00d9ae9ae5090f",
+                "reference": "9198eea354be75794a7b1064de00d9ae9ae5090f",
                 "shasum": ""
             },
             "require": {
@@ -3009,7 +3009,7 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
-            "time": "2019-05-30T16:10:05+00:00"
+            "time": "2019-06-08T06:33:08+00:00"
         },
         {
             "name": "symfony/console",
