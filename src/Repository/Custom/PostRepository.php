@@ -6,13 +6,17 @@ use App\Entity\Post;
 use App\Repository\Interfaces\PostRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class PostRepository implements PostRepositoryInterface
 {
     private $entityManager;
 
     private $repository;
+
+    private $queryBuilder;
 
     public function __construct(EntityManagerInterface $entityManager)
     {
@@ -71,6 +75,26 @@ class PostRepository implements PostRepositoryInterface
             ->getQuery();
 
         return $queryBuilder->getArrayResult();
+    }
+
+    public function paginationPostIndex()
+    {
+        $query = $this->entityManager
+            ->createQuery(
+                'SELECT p FROM App:Post p ORDER BY p.publishedAt ASC'
+            );
+
+        return $query;
+    }
+    public function paginate($dql, $page = 1, $limit = 5)
+    {
+        $paginator = new Paginator($dql);
+
+        $paginator->getQuery()
+            ->setFirstResult($limit * ($page - 1)) // Offset
+            ->setMaxResults($limit); // Limit
+
+        return $paginator;
     }
 
 }

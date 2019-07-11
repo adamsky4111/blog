@@ -13,7 +13,9 @@ use App\Repository\PostRepository;
 use App\Repository\TagRepository;
 use App\Service\DuplicateService;
 use App\Service\FileUploaderService;
+use App\Service\PaginationService;
 use App\Service\PostService;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,10 +32,11 @@ class PostController extends AbstractController
     /**
      * @Route("/", name="post_index", methods={"GET"})
      */
-    public function index(PostService $postService): Response
+    public function index(PaginationService $paginationService,
+                          Request $request): Response
     {
         return $this->render('post/index.html.twig', [
-            'posts' => $postService->getAllPosts(),
+            'pagination' => $paginationService->paginatePost($request),
         ]);
     }
 
@@ -107,7 +110,8 @@ class PostController extends AbstractController
     public function delete(Request $request,
                            Post $post, PostService $postService): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $post->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $post->getId(),
+                $request->request->get('_token'))) {
             $postService->deletePost($post);
         }
 

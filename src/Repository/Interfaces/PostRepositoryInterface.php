@@ -16,4 +16,6 @@ interface PostRepositoryInterface
     public function findAll();
 
     public function findAllByPublishedDate();
+
+    public function paginationPostIndex();
 }

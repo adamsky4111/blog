@@ -9,8 +9,9 @@
             <div class="col-sm-4">
                 {{ include('post/loremipsum.html.twig') }}
             </div>
+
             <div class="col-sm-8">
-                {% for post in posts %}
+                {% for post in pagination %}
                     <h2>{{ post.title }}</h2>
                     <h5>{{ post.publishedAt ? post.publishedAt|date('Y-m-d') : '' }}</h5>
                     <img class="img-fluid rounded" src="{{ asset('uploads/img/' ~ post.img) }}" alt="">
@@ -21,6 +22,11 @@
                         <td colspan="5">no records found</td>
                     </tr>
                 {% endfor %}
+
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+
             </div>
         </div>
     </div>
