@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Post;
+use App\Entity\User;
 use App\Repository\Interfaces\PostRepositoryInterface;
 use Doctrine\ORM\EntityNotFoundException;
 
@@ -22,12 +23,22 @@ class PostService
         $this->fileUploaderService = $fileUploaderService;
     }
 
-    public function addOrUpdatePost(Post $post,
-                                    $imgDirectory)
+    public function addPost(Post $post,
+                            $imgDirectory, User $user)
     {
         $post = $this->fileUploaderService->UploadFile($post, $imgDirectory);
         $this->duplicateService->checkExistingTags($post);
         $post->setPublishedAt(new \DateTime("now"));
+        $post->setUser($user);
+        $this->postRepository->save($post);
+    }
+
+    public function updatePost(Post $post,
+                               $imgDirectory)
+    {
+        $post = $this->fileUploaderService->UploadFile($post, $imgDirectory);
+        $this->duplicateService->checkExistingTags($post);
+        $post->setUpdatedDate(new \DateTime("now"));
         $this->postRepository->save($post);
     }
 
@@ -44,5 +55,10 @@ class PostService
     public function getPost($id)
     {
         return $this->postRepository->find($id);
+    }
+
+    public function getPostsByUserId($id)
+    {
+        return $this->postRepository->findByUser($id);
     }
 }

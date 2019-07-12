@@ -53,8 +53,10 @@ class PostController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $postService->addOrUpdatePost($post,
-                $this->getParameter('img_directory'));
+            $postService->addPost($post,
+                $this->getParameter('img_directory'),
+                $this->getUser()
+            );
 
             return $this->redirectToRoute('post_index');
         }
@@ -90,8 +92,9 @@ class PostController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $postService->addOrUpdatePost($post,
-                $this->getParameter('img_directory'));
+            $postService->updatePost($post,
+                $this->getParameter('img_directory')
+            );
 
             return $this->redirectToRoute('post_index', [
                 'id' => $post->getId(),

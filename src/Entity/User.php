@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -26,7 +27,11 @@ class User implements UserInterface
      * @ORM\Column(type="json")
      */
     private $roles = [];
-
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="user")
+     */
+    private $posts;
 
     private $plainPassword;
 
@@ -124,6 +129,28 @@ class User implements UserInterface
     }
 
     /**
+     * @return ArrayCollection
+     */
+    public function getPosts(): ArrayCollection
+    {
+        return $this->posts;
+    }
+
+    /**
+     * @param ArrayCollection $posts
+     */
+    public function setPosts(ArrayCollection $posts): void
+    {
+        $this->posts = $posts;
+    }
+
+    public function addPost(Post $post): void
+    {
+        $this->posts->add($post);
+    }
+
+
+    /**
      * @see UserInterface
      */
     public function getSalt()
@@ -139,5 +166,7 @@ class User implements UserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
+
 
 }

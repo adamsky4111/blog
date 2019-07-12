@@ -18,4 +18,6 @@ interface PostRepositoryInterface
     public function findAllByPublishedDate();
 
     public function paginationPostIndex();
+
+    public function findByUser($id);
 }

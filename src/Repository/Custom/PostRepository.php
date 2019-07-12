@@ -97,4 +97,9 @@ class PostRepository implements PostRepositoryInterface
         return $paginator;
     }
 
+    public function findByUser($id)
+    {
+        return $this->repository->findBy(['id' => $id]);
+    }
+
 }

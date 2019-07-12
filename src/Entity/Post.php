@@ -48,6 +48,12 @@ class Post
     private $publishedAt;
 
     /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts", cascade={"remove"})
+     */
+    private $user;
+
+    /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post")
      */
@@ -239,5 +245,23 @@ class Post
 
         return $this;
     }
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
+    }
+
+
 
 }
