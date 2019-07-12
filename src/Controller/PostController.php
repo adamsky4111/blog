@@ -92,6 +92,8 @@ class PostController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $this->denyAccessUnlessGranted('edit', $post);
+
             $postService->updatePost($post,
                 $this->getParameter('img_directory')
             );

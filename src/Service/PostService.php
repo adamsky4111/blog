@@ -24,7 +24,8 @@ class PostService
     }
 
     public function addPost(Post $post,
-                            $imgDirectory, User $user)
+                            $imgDirectory,
+                            User $user)
     {
         $post = $this->fileUploaderService->UploadFile($post, $imgDirectory);
         $this->duplicateService->checkExistingTags($post);
