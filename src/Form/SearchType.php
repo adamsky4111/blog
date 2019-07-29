@@ -2,6 +2,7 @@
 namespace App\Form;
 
 use App\Entity\Post;
+use App\Entity\Search;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -24,7 +25,7 @@ class SearchType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Post::class,
+            'data_class' => Search::class,
         ]);
     }
 }

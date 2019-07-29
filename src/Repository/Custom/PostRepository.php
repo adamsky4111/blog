@@ -4,6 +4,7 @@ namespace App\Repository\Custom;
 
 use App\Entity\Post;
 use App\Repository\Interfaces\PostRepositoryInterface;
+use App\Repository\SearchRepository\SearchPostRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -54,16 +55,6 @@ class PostRepository implements PostRepositoryInterface
                 'SELECT p FROM App:Post p ORDER BY p.publishedAt ASC'
             )
             ->getResult();
-    }
-    public function searchByTitle($title)
-    {
-        $queryBuilder = $this->entityManager->createQueryBuilder('p')
-            ->andWhere('p.title LIKE :title')
-            ->setParameter('title',$title)
-            ->orderBy('p.publishedAt', 'ASC')
-            ->getQuery();
-
-        return $queryBuilder->getResult();
     }
     public function findAllPostsIdByTagId($tagId)
     {

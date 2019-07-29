@@ -15,6 +15,7 @@ use App\Service\DuplicateService;
 use App\Service\FileUploaderService;
 use App\Service\PaginationService;
 use App\Service\PostService;
+use FOS\ElasticaBundle\Manager\RepositoryManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -122,4 +123,6 @@ class PostController extends AbstractController
 
         return $this->redirectToRoute('post_index');
     }
+
+
 }
