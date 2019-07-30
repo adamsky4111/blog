@@ -10,6 +10,7 @@ use App\Form\PostType;
 use App\Form\SearchType;
 use App\Repository\Custom\PostRepository;
 use App\Repository\SearchRepository\SearchPostRepository;
+use App\Service\Search\PostSearchService;
 use FOS\ElasticaBundle\Manager\RepositoryManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,11 +25,10 @@ class SearchController extends AbstractController
      *
      * @param Request $request
      * @param RepositoryManagerInterface $manager
-     * @param PostRepository $postRepository
      * @return Response
      */
     public function searchByTitle(Request $request,
-                                  RepositoryManagerInterface $manager, PostRepository $postRepository): Response
+                                  PostSearchService $searchService): Response
     {
         $search = new Search();
         $form = $this->createForm(
@@ -36,15 +36,21 @@ class SearchController extends AbstractController
 
         $form->handleRequest($request);
         if($form->isSubmitted()){
-            /** @var SearchPostRepository $repository */
-            $repository = $manager->getRepository(Post::class);
-            dd($repository->search($search->getValue()));
 
+            $result = $searchService->searchByTitle($search->getValue());
+            return $this->render('search/index2.html.twig', [
+                'result' => $result,
+                ]);
         }
 
         return $this->render('search/index.html.twig', [
             'search' => $search,
-            'form' => $form->createView(),]);
+            'form' => $form->createView(),
+            ]);
     }
 
+    public function showResult(Request $request)
+    {
+
+    }
 }

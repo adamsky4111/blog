@@ -17,7 +17,6 @@ class SearchPostRepository extends Repository
         if (!\is_null($search)) {
             $fieldQuery = new Query\MatchPhrasePrefix();
             $fieldQuery->setField('title', $search);
-
             $boolQuery->addMust($fieldQuery);
         }
 

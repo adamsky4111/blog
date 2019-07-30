@@ -19,6 +19,10 @@ fos_elastica:
                             analyzer: keyword_analyzer
                             search_analyzer: keyword_analyzer
                             type: text
+                        description:
+                            analyzer: keyword_analyzer
+                            search_analyzer: keyword_analyzer
+                            type: text
                     persistence:
                         driver: orm
                         model: App\Entity\Post

@@ -50,6 +50,7 @@ class PostRepository implements PostRepositoryInterface
 
     public function findAllByPublishedDate()
     {
+
         return $this->entityManager
             ->createQuery(
                 'SELECT p FROM App:Post p ORDER BY p.publishedAt ASC'
@@ -68,6 +69,15 @@ class PostRepository implements PostRepositoryInterface
         return $queryBuilder->getArrayResult();
     }
 
+    public function findByTitle($title)
+    {
+        return
+            $this->entityManager
+            ->createQuery(
+                'SELECT p FROM App:Post p WHERE p.title LIKE '."'%".$title."%'"
+            )
+            ->getResult();
+    }
     public function paginationPostIndex()
     {
         $query = $this->entityManager
