@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f6e7ec6a-fab3-4001-98c3-e695d429214b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Service/Search/PostSearchService.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/search/index2.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/fos_elastica.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/fos_elastica.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/SearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SearchController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Custom/PostRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Custom/PostRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/SearchRepository/SearchPostRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/SearchRepository/SearchPostRepository.php" afterDir="false" />
-    </list>
+    <list default="true" id="f6e7ec6a-fab3-4001-98c3-e695d429214b" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -422,7 +414,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.jetbrains.php.phpunit.codeGeneration.PhpNewTestDialog.defaultLibrary" value="PHPUnit" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../API" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -489,16 +481,15 @@
       <workItem from="1562920057335" duration="14094000" />
       <workItem from="1563960627260" duration="4003000" />
       <workItem from="1564387969231" duration="11717000" />
-      <workItem from="1564477168592" duration="2326000" />
+      <workItem from="1564477168592" duration="2924000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="221124000" />
+    <option name="totallyTimeSpent" value="221722000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1920" y="-2" width="1920" height="1082" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3036286" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
